@@ -12,7 +12,7 @@ if "page" not in st.session_state:
 
 def navigate(page):
     st.session_state.page = page
-
+    st.rerun()
 # -------------------- TOP NAVIGATION BAR --------------------
 col1, col2, col3,col4 = st.columns([1, 1, 1,1])
 with col1:

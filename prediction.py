@@ -603,9 +603,9 @@ def show_prediction():
         except Exception as e:
             st.error(f"❌ Prediction error: {e}")
 
-    # Must be OUTSIDE all functions
-    if __name__ == "__main__":
-        show_prediction()
+    # # Must be OUTSIDE all functions
+    # if __name__ == "__main__":
+    #     show_prediction()
 
 
 

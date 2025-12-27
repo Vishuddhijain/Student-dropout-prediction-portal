@@ -74,3 +74,4 @@ def show_home():
         st.session_state.page = "prediction"
         st.rerun()
 
+show_home()

@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>AI Student Counselling Assistant</title>
+
+    <style>
+      /* 🌈 Full-page Gradient Background */
+      body {
+        margin: 0;
+        padding: 0;
+        height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-family: "Segoe UI", Helvetica, Arial, sans-serif;
+
+        background: linear-gradient(
+          90deg,
+          rgba(42, 123, 155, 1) 0%,
+          rgba(87, 199, 133, 1) 50%,
+          rgba(237, 221, 83, 1) 100%
+        );
+      }
+
+      /* 🧊 Glass Chat Container */
+      .chat-container {
+        width: 500px;
+        height: 650px;
+        background: rgba(255, 255, 255, 0.3);
+        backdrop-filter: blur(15px);
+        border-radius: 22px;
+        box-shadow: 0 8px 30px rgba(0, 0, 0, 0.25);
+        display: flex;
+        flex-direction: column;
+        overflow: hidden;
+        border: 1px solid rgba(255, 255, 255, 0.3);
+      }
+
+      /* 🔵 Header */
+      .chat-header {
+        background: linear-gradient(
+          90deg,
+          rgba(42, 123, 155, 1) 0%,
+          rgba(87, 199, 133, 1) 100%
+        );
+        padding: 18px;
+        text-align: center;
+        font-size: 22px;
+        font-weight: 700;
+        color: white;
+        letter-spacing: 0.4px;
+      }
+
+      /* 💬 Chat Messages Box */
+      .chat-box {
+        flex: 1;
+        overflow-y: auto;
+        padding: 18px;
+        background: rgba(255, 255, 255, 0.15);
+      }
+
+      /* ✉ Message Bubbles */
+      .message {
+        max-width: 80%;
+        padding: 12px 16px;
+        margin: 10px 0;
+        font-size: 15px;
+        line-height: 1.5;
+        border-radius: 14px;
+        display: inline-block;
+        white-space: pre-wrap;
+      }
+
+      /* 🧍‍♂️ User Bubble */
+      .user {
+        background: linear-gradient(
+          90deg,
+          rgba(42, 123, 155, 1) 0%,
+          rgba(87, 199, 133, 1) 100%
+        );
+        color: white;
+        align-self: flex-end;
+        border-bottom-right-radius: 4px;
+      }
+
+      /* 🤖 Bot Bubble */
+      .bot {
+        background: rgba(255, 255, 255, 0.5);
+        color: #003049;
+        align-self: flex-start;
+        border-bottom-left-radius: 4px;
+        backdrop-filter: blur(4px);
+      }
+
+      /* 📌 Info Line */
+      .small {
+        font-size: 0.85rem;
+        padding: 10px 16px;
+        text-align: center;
+        background: rgba(255, 255, 255, 0.2);
+        color: #002b36;
+        font-weight: 500;
+      }
+
+      /* ➤ Input area */
+      .input-area {
+        display: flex;
+        padding: 14px;
+        background: rgba(255, 255, 255, 0.22);
+        backdrop-filter: blur(10px);
+      }
+
+      /* ✏ Input box styled like Streamlit */
+      input {
+        flex: 1;
+        padding: 12px 14px;
+        font-size: 15px;
+        border-radius: 12px;
+        border: 1px solid rgba(42, 123, 155, 0.4);
+        outline: none;
+        background: rgba(255, 255, 255, 0.65);
+        color: #003049;
+        transition: 0.2s;
+      }
+
+      input:focus {
+        border-color: #57c785 !important;
+        box-shadow: 0 0 0 3px rgba(87, 199, 133, 0.4);
+      }
+
+      input::placeholder {
+        color: #3f5c68;
+      }
+
+      /* 🟦 Send Button (Streamlit style) */
+      button {
+        margin-left: 12px;
+        padding: 12px 22px;
+        border: none;
+        border-radius: 12px;
+        background: linear-gradient(
+          90deg,
+          rgba(42, 123, 155, 1) 0%,
+          rgba(87, 199, 133, 1) 100%
+        );
+        color: white;
+        font-size: 15px;
+        font-weight: 600;
+        cursor: pointer;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+        transition: all 0.25s ease-in-out;
+      }
+
+      button:hover {
+        transform: scale(1.05);
+        background: linear-gradient(
+          90deg,
+          rgba(87, 199, 133, 1) 0%,
+          rgba(237, 221, 83, 1) 100%
+        );
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="chat-container">
+      <div class="chat-header">AI Counselling Assistant</div>
+
+      <div class="chat-box" id="chatBox"></div>
+
+      <div class="small">
+        Tip: After prediction, your result is auto-sent here.
+      </div>
+
+      <div class="input-area">
+        <input
+          id="userInput"
+          placeholder="Ask anything... (e.g. my result, give me advice)"
+        />
+        <button id="sendBtn">Send</button>
+      </div>
+    </div>
+
+    <script>
+      const chatBox = document.getElementById("chatBox");
+      const input = document.getElementById("userInput");
+      const sendBtn = document.getElementById("sendBtn");
+      const API = window.location.origin;
+
+      /* Add a Chat bubble */
+      function addMessage(text, cls) {
+        const d = document.createElement("div");
+        d.className = "message " + cls;
+        d.textContent = text;
+        chatBox.appendChild(d);
+        chatBox.scrollTop = chatBox.scrollHeight;
+      }
+
+      /* Send message to Flask backend */
+      async function sendMessage() {
+        const msg = input.value.trim();
+        if (!msg) return;
+
+        addMessage(msg, "user");
+        input.value = "";
+
+        try {
+          const res = await fetch(API + "/chatbot_api", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ message: msg }),
+          });
+
+          const data = await res.json();
+          addMessage(data.reply || "⚠ No response", "bot");
+        } catch (err) {
+          addMessage("⚠ Could not connect to server.", "bot");
+        }
+      }
+
+      /* Event Listeners */
+      sendBtn.onclick = sendMessage;
+      input.addEventListener(
+        "keypress",
+        (e) => e.key === "Enter" && sendMessage()
+      );
+
+      addMessage(
+        "Hello — I'm your counselling assistant. Ask 'my result' or 'give me advice'.",
+        "bot"
+      );
+    </script>
+  </body>
+</html>
