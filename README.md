@@ -5,6 +5,7 @@
 ![Flask](https://img.shields.io/badge/Flask-Backend-black?logo=flask)
 ![Explainable AI](https://img.shields.io/badge/Explainable%20AI-SHAP-green)
 ![Status](https://img.shields.io/badge/Project-Academic%20Minor-success)
+
 An end-to-end **AI-powered educational support system** that predicts student dropout risk at an early stage and provides **transparent explanations** along with **personalized AI-driven counselling assistance**.
 
 ---
@@ -73,8 +74,7 @@ To ensure transparency and trust, the system explains each prediction using SHAP
 
 An AI-powered counselling module generates personalized academic guidance based on the predicted risk level and contributing factors.
 
-![AI Chatbot](chatbot.png)
-
+<!-- Smaller chatbot image --> <img src="chatbot.png" alt="AI Chatbot" width="350"/>
 ---
 
 ## 📈 Risk Interpretation
@@ -105,6 +105,102 @@ An AI-powered counselling module generates personalized academic guidance based 
 - Responsible use of student data
 
 ---
+Great README already 👍
+Below is a **clean, professional “How to Run Locally” section** you can **directly paste** into your README. It matches your project structure and is viva-safe.
+
+---
+
+## ▶️ How to Run Locally
+
+Follow the steps below to run the **Student Dropout Prediction Portal** on your local machine.
+
+### 1️⃣ Clone the Repository
+
+```bash
+git clone https://github.com/Vishuddhijain/Student-dropout-prediction-portal.git
+cd Student-dropout-prediction-portal
+```
+
+---
+
+### 2️⃣ Create & Activate Virtual Environment (Recommended)
+
+**Windows**
+
+```bash
+python -m venv .venv
+.venv\Scripts\activate
+```
+
+**Linux / macOS**
+
+```bash
+python3 -m venv .venv
+source .venv/bin/activate
+```
+
+---
+
+### 3️⃣ Install Dependencies
+
+```bash
+pip install -r requirements.txt
+```
+
+---
+
+### 4️⃣ Start Backend (Flask API + Chatbot)
+
+Open a new terminal (keep virtual environment active):
+
+```bash
+python app_chatbot.py
+```
+
+✔ Flask server will run at:
+
+```
+http://127.0.0.1:5000
+```
+
+---
+
+### 5️⃣ Start Frontend (Streamlit App)
+
+In another terminal:
+
+```bash
+streamlit run app.py
+```
+
+✔ Streamlit app will open automatically at:
+
+```
+http://localhost:8501
+```
+
+---
+
+### 6️⃣ Use the Application
+
+* Enter student demographic and academic details
+* Click **Predict Dropout**
+* View:
+
+  * Dropout probability
+  * Risk level (Low → Extreme)
+  * Feature importance & SHAP explanations
+* Interact with the **AI Counselling Assistant**
+
+---
+
+### ⚠️ Notes
+
+* Ensure all `.pkl` model files are present in the project root
+* Internet connection is required for Google Gemini AI
+* This project is intended for **academic and research purposes**
+
+---
 
 ## 📚 References
 
@@ -121,6 +217,5 @@ An AI-powered counselling module generates personalized academic guidance based 
 **Vishuddhi Jain**  
 📧 Email: [vishuddhi0303.jain@gmail.com](mailto:vishuddhi0303.jain@gmail.com)  
 🎓 B.Tech Engineering Student
-```
 
 ---
