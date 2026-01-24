@@ -9,6 +9,10 @@
 An end-to-end **AI-powered educational support system** that predicts student dropout risk at an early stage and provides **transparent explanations** along with **personalized AI-driven counselling assistance**.
 
 ---
+## 🔗 Live Demo
+**Deployed on Render** ► https://student-dropout-prediction-portal-1.onrender.com
+
+---
 
 ## 📌 Overview
 
