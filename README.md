@@ -1,4 +1,4 @@
-# 🎓 Student Dropout Prediction Portal
+# 🎓 EduGuard
 ![Python](https://img.shields.io/badge/Python-3.9%2B-blue?logo=python\&logoColor=white)
 ![Machine Learning](https://img.shields.io/badge/Machine%20Learning-Scikit--Learn-orange)
 ![Streamlit](https://img.shields.io/badge/Streamlit-Web%20App-red?logo=streamlit)
